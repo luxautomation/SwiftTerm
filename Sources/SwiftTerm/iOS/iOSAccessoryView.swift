@@ -29,6 +29,14 @@ public class TerminalAccessory: UIInputView, UIInputViewAudioFeedback {
             controlButton?.isSelected = controlModifier
         }
     }
+
+    var shiftButton: UIButton?
+    /// This tracks whether the "shift" button is turned on or not
+    public var shiftModifier: Bool = false {
+        didSet {
+            shiftButton?.isSelected = shiftModifier
+        }
+    }
     
     var touchButton: UIButton!
     var keyboardButton: UIButton!
@@ -95,6 +103,12 @@ public class TerminalAccessory: UIInputView, UIInputViewAudioFeedback {
     func ctrl (_ sender: UIButton)
     {
         controlModifier.toggle()
+    }
+
+    @objc
+    func shift (_ sender: UIButton)
+    {
+        shiftModifier.toggle()
     }
 
     // Controls the timer for auto-repeat
@@ -200,12 +214,18 @@ public class TerminalAccessory: UIInputView, UIInputViewAudioFeedback {
             let controlButton = makeButton("", #selector(ctrl), icon: "control", isNormal: false)
             leftViews.append(controlButton)
             self.controlButton = controlButton
+            let shiftButton = makeButton("⇧", #selector(shift), isNormal: false)
+            leftViews.append(shiftButton)
+            self.shiftButton = shiftButton
             leftViews.append(makeButton("", #selector(tab), icon: "arrow.right.to.line.compact"))
         } else {
             leftViews.append(makeButton ("esc", #selector(esc), isNormal: false))
             let controlButton = makeButton ("ctrl", #selector(ctrl), isNormal: false)
             leftViews.append(controlButton)
             self.controlButton = controlButton
+            let shiftButton = makeButton("⇧", #selector(shift), isNormal: false)
+            leftViews.append(shiftButton)
+            self.shiftButton = shiftButton
             leftViews.append(makeButton("", #selector(tab), icon: "arrow.right.to.line.compact", isNormal: false))
             //leftViews.append(makeButton ("tab", #selector(tab)))
         }
