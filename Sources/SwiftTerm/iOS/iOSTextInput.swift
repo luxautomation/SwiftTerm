@@ -461,19 +461,16 @@ extension TerminalView: UITextInput {
             lastFloatingCursorLocation = point
         }
 
-        if terminal.isCurrentBufferAlternate {
-            let deltay = lastPosition.y - point.y
-
+        let deltay = lastPosition.y - point.y
+        if abs(deltay) > 5 {
             var data: [UInt8]
-            if abs (deltay) > 2 {
-                if deltay > 0 {
-                    data = terminal.applicationCursor ? EscapeSequences.moveUpApp : EscapeSequences.moveUpNormal
-                } else {
-                    data = terminal.applicationCursor ? EscapeSequences.moveDownApp : EscapeSequences.moveDownNormal
-                }
-                send (data)
-                lastFloatingCursorLocation = point
+            if deltay > 0 {
+                data = terminal.applicationCursor ? EscapeSequences.moveUpApp : EscapeSequences.moveUpNormal
+            } else {
+                data = terminal.applicationCursor ? EscapeSequences.moveDownApp : EscapeSequences.moveDownNormal
             }
+            send(data)
+            lastFloatingCursorLocation = point
         }
     }
     
