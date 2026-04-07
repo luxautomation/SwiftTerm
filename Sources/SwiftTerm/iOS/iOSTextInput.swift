@@ -395,11 +395,11 @@ extension TerminalView: UITextInput {
     }
 
     public func dictationRecordingDidEnd() {
-        uitiLog("dictationRecordingDidEnd() textInputStorage:\"\(String(textInputStorage))\" count:\(textInputStorage.count) marked:\(_markedTextRange?.description ?? "nil") selected:\(_selectedTextRange.description)")
+        uitiLog("dictationRecordingDidEnd() textInputStorage:\"\(String(textInputStorage))\" count:\(textInputStorage.count) marked:\(_markedTextRange?.description ?? \"nil\") selected:\(_selectedTextRange.description)")
     }
     
     public func dictationRecognitionFailed() {
-        uitiLog("dictationRecognitionFailed() textInputStorage:\"\(String(textInputStorage))\" count:\(textInputStorage.count) marked:\(_markedTextRange?.description ?? "nil") selected:\(_selectedTextRange.description)")
+        uitiLog("dictationRecognitionFailed() textInputStorage:\"\(String(textInputStorage))\" count:\(textInputStorage.count) marked:\(_markedTextRange?.description ?? \"nil\") selected:\(_selectedTextRange.description)")
     }
     
     // MARK: - Dictation Placeholder Support
@@ -412,9 +412,9 @@ extension TerminalView: UITextInput {
         uitiLog("removeDictationResultPlaceholder placeholder: \(placeholder), willInsertResult: \(willInsertResult)")
     }
     
-    public func insertDictationResult(_ dictationResult: [UIDictationPhrase]) {
+    open func insertDictationResult(_ dictationResult: [UIDictationPhrase]) {
         uitiLog("insertDictationResult() phrases: \(dictationResult)")
-        uitiLog("textInputStorage:\"\(String(textInputStorage))\" count:\(textInputStorage.count) marked:\(_markedTextRange?.description ?? "nil") selected:\(_selectedTextRange.description)")
+        uitiLog("textInputStorage:\"\(String(textInputStorage))\" count:\(textInputStorage.count) marked:\(_markedTextRange?.description ?? \"nil\") selected:\(_selectedTextRange.description)")
         
         // Combine all phrases into a single string
         let combinedText = dictationResult.map { $0.text }.joined()
