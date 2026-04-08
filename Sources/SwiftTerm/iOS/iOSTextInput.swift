@@ -395,11 +395,13 @@ extension TerminalView: UITextInput {
     }
 
     public func dictationRecordingDidEnd() {
-        uitiLog("dictationRecordingDidEnd() textInputStorage:\"\(String(textInputStorage))\" count:\(textInputStorage.count) marked:\(_markedTextRange?.description ?? \"nil\") selected:\(_selectedTextRange.description)")
+        let markedDesc = _markedTextRange?.description ?? "nil"
+        uitiLog("dictationRecordingDidEnd() textInputStorage:\"\(String(textInputStorage))\" count:\(textInputStorage.count) marked:\(markedDesc) selected:\(_selectedTextRange.description)")
     }
-    
+
     public func dictationRecognitionFailed() {
-        uitiLog("dictationRecognitionFailed() textInputStorage:\"\(String(textInputStorage))\" count:\(textInputStorage.count) marked:\(_markedTextRange?.description ?? \"nil\") selected:\(_selectedTextRange.description)")
+        let markedDesc = _markedTextRange?.description ?? "nil"
+        uitiLog("dictationRecognitionFailed() textInputStorage:\"\(String(textInputStorage))\" count:\(textInputStorage.count) marked:\(markedDesc) selected:\(_selectedTextRange.description)")
     }
     
     // MARK: - Dictation Placeholder Support
@@ -414,7 +416,8 @@ extension TerminalView: UITextInput {
     
     open func insertDictationResult(_ dictationResult: [UIDictationPhrase]) {
         uitiLog("insertDictationResult() phrases: \(dictationResult)")
-        uitiLog("textInputStorage:\"\(String(textInputStorage))\" count:\(textInputStorage.count) marked:\(_markedTextRange?.description ?? \"nil\") selected:\(_selectedTextRange.description)")
+        let markedDesc = _markedTextRange?.description ?? "nil"
+        uitiLog("textInputStorage:\"\(String(textInputStorage))\" count:\(textInputStorage.count) marked:\(markedDesc) selected:\(_selectedTextRange.description)")
         
         // Combine all phrases into a single string
         let combinedText = dictationResult.map { $0.text }.joined()
