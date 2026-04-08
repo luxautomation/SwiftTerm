@@ -1664,11 +1664,6 @@ open class TerminalView: UIScrollView, UITextInputTraits, UIKeyInput, UIScrollVi
         commitTextInput(text, applyModifiers: false)
     }
 
-    /// Open so subclasses can intercept dictation before insertText is called.
-    open func insertDictationResult(_ dictationResult: [UIDictationPhrase]) {
-        super.insertDictationResult(dictationResult)
-    }
-
     /*
         Soft keyboard input. Hardware keyboard text input is delivered here; special keys are handled in pressesBegan.
     */
