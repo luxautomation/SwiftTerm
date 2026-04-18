@@ -1374,15 +1374,23 @@ open class TerminalView: UIScrollView, UITextInputTraits, UIKeyInput, UIScrollVi
         }
     }
     
+    /// When true, `updateScroller()` updates `contentSize` but skips the snap-to-bottom.
+    /// Subclasses set this when the user is reading scrollback.
+    /// Setting it back to `false` immediately snaps to the bottom via `updateScroller()`.
+    open var scrollLock: Bool = false {
+        didSet { if !scrollLock { updateScroller() } }
+    }
+
     func updateScroller ()
     {
         let displayBuffer = terminal.displayBuffer
         contentSize = CGSize (width: CGFloat (displayBuffer.cols) * cellDimension.width,
                               height: CGFloat (displayBuffer.lines.count) * cellDimension.height)
-        //contentOffset = CGPoint (x: 0, y: CGFloat (displayBuffer.lines.count-displayBuffer.rows)*cellDimension.height)
+        // Don't snap to bottom when user has scroll-locked or is actively gesturing.
+        // isTracking/isDragging/isDecelerating guards prevent snap during touch pre-drag
+        // phase and deceleration, which would cancel the user's scroll attempt.
+        guard !scrollLock && !isTracking && !isDragging && !isDecelerating else { return }
         contentOffset = CGPoint (x: 0, y: CGFloat (displayBuffer.lines.count-displayBuffer.rows)*cellDimension.height)
-        //Xscroller.doubleValue = scrollPosition
-        //Xscroller.knobProportion = scrollThumbsize
     }
 
 #if canImport(MetalKit)
